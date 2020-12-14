@@ -1,0 +1,304 @@
+/** CSS STYLE **/
+:root {
+  --dark: black;
+  --light: white;
+  --gray: #303846;
+  --cream: #f7f7f7;
+  --success: #09d3ac;
+  --alert: tomato;
+  --content-width: 1000px;
+  --height: 3.75rem;
+  --logo-height: 2.5rem;
+  --padding: 0.625rem;
+  --font-size: 16px;
+  --line-height: 1.5;
+  --bg-space: url("../assets/banner.png");
+  --shadow-radius: 1rem;
+}
+
+body {
+  padding: unset;
+
+  font-size: var(--font-size);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+* {
+  box-sizing: border-box;
+  margin: unset;
+  padding: unset;
+
+  color: unset;
+
+  text-decoration: unset;
+
+  list-style-type: none;
+
+  outline: none;
+  cursor: pointer;
+}
+
+select {
+  background-color: unset;
+}
+
+select:focus,
+textarea:focus,
+input:focus,
+button:focus,
+a:focus {
+  outline: none;
+  box-shadow: 0 0 var(--shadow-radius) var(--success);
+}
+
+input:not(:placeholder-shown):invalid:focus {
+  box-shadow: 0 0 var(--shadow-radius) var(--alert);
+}
+
+small {
+  font-size: smaller;
+
+  opacity: 0.8;
+}
+
+legend {
+  font-weight: bolder;
+  font-size: 1.3rem;
+}
+
+li {
+  list-style-type: none;
+}
+
+.bg-white {
+  background-color: var(--light);
+}
+
+.bg-dark {
+  background-color: var(--gray);
+}
+
+.bg-cream {
+  background-color: var(--cream);
+}
+
+.fl-grow-3 {
+  flex-grow: 0.1;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-45 {
+  width: 45%;
+}
+
+.pt-1 {
+  padding-top: var(--padding);
+}
+
+.pb-1 {
+  padding-bottom: var(--padding);
+}
+
+.pl-2 {
+  padding-left: calc(var(--padding) * 2);
+}
+
+.pl-4 {
+  padding-left: calc(var(--padding) * 4);
+}
+
+.mr-1 {
+  margin-right: 1rem;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
+.d-inln-block {
+  display: inline-block;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.d-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flx-dir-row-r {
+  flex-direction: row-reverse;
+}
+
+.content-center {
+  justify-content: center;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.space-evenly {
+  justify-content: space-evenly;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-self-center {
+  align-self: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.btn {
+  padding: var(--padding);
+
+  font-size: 1em;
+
+  background-color: unset;
+  border-style: groove;
+  border-radius: var(--padding);
+}
+
+.btn-green {
+  color: var(--success);
+  font-weight: bold;
+
+  border-color: var(--success);
+  border-radius: var(--padding);
+}
+
+.btn-light {
+  color: var(---light);
+  font-weight: bold;
+
+  border-color: var(---light);
+  border-radius: var(--padding);
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  padding-bottom: 0.5em;
+
+  font-weight: bold;
+  font-size: 1.8em;
+}
+
+.h3 {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.border-green {
+  border-color: var(--success);
+}
+
+.text-green {
+  color: var(--success);
+}
+
+.text-white {
+  color: var(--light);
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+section {
+  padding: var(--height) 0;
+}
+
+.logo--img {
+  height: var(--logo-height);
+}
+
+.logo-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: var(--height);
+  padding: 1rem 2rem;
+}
+
+.header-fixed {
+  position: fixed;
+  right: 0;
+  left: 0;
+}
+
+/*  Main part */
+
+main {
+  padding-top: var(--height);
+}
+
+.bg-space {
+  background-color: var(--gray);
+  background-image: var(--bg-space);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+/* Section with image */
+
+.content {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.content-half {
+  width: 100%;
+  max-width: calc(var(--content-width) / 2);
+}
+
+.banner--img {
+  height: calc(var(--logo-height) * 3.2);
+}
+
+/* Form section */
+
+.fieldset {
+  padding: 1rem 2rem;
+
+  border-style: groove;
+}
+
+.form-input {
+  width: 50%;
+  padding: 0.3rem 0.5rem;
+
+  font-size: 0.8rem;
+
+  border: 1px solid;
+  border-radius: var(--padding);
+}

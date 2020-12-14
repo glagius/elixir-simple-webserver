@@ -12,6 +12,7 @@ defmodule SimpleWebServer do
 
   defp loop(socket) do
     {:ok, client} = :gen_tcp.accept(socket)
+    # spawn Client module.
     spawn(__MODULE__, :receive_local, [client])
     loop(socket)
   end
@@ -29,13 +30,12 @@ defmodule SimpleWebServer do
 
   defp write_line(client) do
     {result, _} = :timer.tc(fn -> Process.sleep(5000) end)
+    {_, index} = File.read("static/pages/index.html")
     :gen_tcp.send(client, "HTTP/1.1 200 OK
     Content-Type: text/html; charset=utf-8
     Content-Length: 1234
 
-    <html><body>
-    <h2>Server example worked: #{result} </h2>
-    </body></html>")
+    #{index}")
     :gen_tcp.close(client)
   end
 end
