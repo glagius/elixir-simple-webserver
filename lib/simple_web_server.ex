@@ -30,7 +30,7 @@ defmodule SimpleWebServer do
 
   defp write_line(client) do
     {result, _} = :timer.tc(fn -> Process.sleep(5000) end)
-    {_, index} = File.read("static/pages/index.html")
+    {_, index} = File.read("static/pages/home/index.html")
     :gen_tcp.send(client, "HTTP/1.1 200 OK
     Content-Type: text/html; charset=utf-8
     Content-Length: 1234
