@@ -55,7 +55,8 @@ defmodule ResponseBuilderTest do
     root_params = %{"file" => home}
     about_params = %{"file" => about}
     not_found_params = %{"file" => "some/page.html"}
-    {_, home_html_size} = File.stat(home) |> (fn {_, stats} -> Map.fetch(stats, :size) end).()
+
+    home_html_size = String.length(home_html)
 
     home_header =
       Enum.join(
@@ -67,7 +68,7 @@ defmodule ResponseBuilderTest do
         "\n"
       )
 
-    {_, about_html_size} = File.stat(about) |> (fn {_, stats} -> Map.fetch(stats, :size) end).()
+    about_html_size = String.length(about_html)
 
     about_header =
       Enum.join(
@@ -79,8 +80,7 @@ defmodule ResponseBuilderTest do
         "\n"
       )
 
-    {_, not_found_html_size} =
-      File.stat(not_found) |> (fn {_, stats} -> Map.fetch(stats, :size) end).()
+    not_found_html_size = String.length(not_found_html)
 
     not_found_header =
       Enum.join(

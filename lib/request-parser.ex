@@ -1,8 +1,9 @@
 defmodule RequestParser do
   @js "static/js"
-  @static "static/styles"
+  @styles "static/styles"
   @pages "static/pages"
   @assets "static/assets"
+  @static "static"
   @moduledoc """
   Module will parse incoming requests, and return structure with METHOD, Request-path, Params.
 
@@ -74,8 +75,10 @@ defmodule RequestParser do
   defp parse_path(path) do
     case Path.extname(path) do
       ".css" -> Path.join(@static, path)
-      ".js" -> Path.join(@js, path)
+      ".js" -> Path.join(@static, path)
       ".ico" -> Path.join(@assets, path)
+      ".svg" -> Path.join(@static, path)
+      ".jpg" -> Path.join(@static, path)
       _ -> get_page(path)
     end
   end

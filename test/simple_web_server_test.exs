@@ -27,14 +27,12 @@ defmodule SimpleWebServerTest do
     [pages, values] = state.data
 
     sizes =
-      Enum.map(pages, fn {page, path} ->
+      Enum.map(pages, fn {page, _path} ->
+        {_, data} = values[page]
+
         {
           page,
-          File.stat(path)
-          |> (fn {_, stats} ->
-                {_, size} = Map.fetch(stats, :size)
-                size
-              end).()
+          String.length(data)
         }
       end)
       |> Enum.into(%{})
@@ -48,7 +46,7 @@ defmodule SimpleWebServerTest do
         "\n"
       )
 
-    assert RequestParser.parse("GET / HTTP/1.1") |> ResponseBuilder.init() == root_200
+    assert RequestParser.parse("GET / HTTP/1.1") |> ResponseBuilder.main() == root_200
   end
 
   def page_headers(:OK, page, sizes) do

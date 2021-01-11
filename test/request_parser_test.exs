@@ -6,6 +6,9 @@ defmodule RequestParserTest do
     assert RequestParser.parse("GET / HTTP/1.1") ==
              {:GET, "/", %{"file" => "static/pages/home/index.html"}}
 
+    assert RequestParser.parse("GET /assets/logo.svg HTTP/1.1") ==
+             {:GET, "/assets/logo.svg", %{"file" => "static/assets/logo.svg"}}
+
     assert RequestParser.parse("GET /about HTTP/1.1") ==
              {:GET, "/about", %{"file" => "static/pages/about/index.html"}}
 
@@ -14,8 +17,8 @@ defmodule RequestParserTest do
     # assert RequestParser.parse("GET /api/v1/user/23?name=Eldar&pass=1234 HTTP/1.1") ==
     #          {:GET, "/api/v1/user/23", %{"name" => "Eldar", "pass" => "1234"}}
 
-    assert RequestParser.parse("GET /index.css HTTP/1.1") ==
-             {:GET, "/index.css", %{"file" => "static/styles/index.css"}}
+    assert RequestParser.parse("GET styles/index.css HTTP/1.1") ==
+             {:GET, "styles/index.css", %{"file" => "static/styles/index.css"}}
   end
 
   test "Parse query params to map" do

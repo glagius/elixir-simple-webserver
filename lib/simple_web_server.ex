@@ -18,24 +18,25 @@ defmodule SimpleWebServer do
   end
 
   def receive_local(client) do
-    client |> read_line |> IO.puts()
-    write_line(client)
+    response =
+      client
+      |> read_line()
+      |> RequestParser.parse()
+      |> IO.inspect()
+      |> ResponseBuilder.main()
+
+    # |> IO.inspect()
+
+    write_line(client, response)
   end
 
   defp read_line(client) do
-    {:ok, data} = :gen_tcp.recv(client, 0)
-    # parse request url
-    data
+    {:ok, request} = :gen_tcp.recv(client, 0)
+    request
   end
 
-  defp write_line(client) do
-    {result, _} = :timer.tc(fn -> Process.sleep(5000) end)
-    {_, index} = File.read("static/pages/home/index.html")
-    :gen_tcp.send(client, "HTTP/1.1 200 OK
-    Content-Type: text/html; charset=utf-8
-    Content-Length: 1234
-
-    #{index}")
+  defp write_line(client, response) do
+    :gen_tcp.send(client, response)
     :gen_tcp.close(client)
   end
 end

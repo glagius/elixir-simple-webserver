@@ -3,14 +3,13 @@ defmodule ResponseBuilder do
   Module will read requested files, get data from database, set headers and combine into one string
   """
 
-  def init({method, _path, params}) do
+  def main({method, _path, params}) do
     # get data depends on method and params.
     # set headers depends on resolved data
     # return headers with result
     {status, value} = resolve({method, params})
     headers = set_headers(params, {status, value})
-
-    Enum.join([headers, value], "\n")
+    Enum.join([headers, value], "\n") |> IO.inspect()
   end
 
   def resolve({:GET, params}) do
@@ -25,7 +24,21 @@ defmodule ResponseBuilder do
 
           ".js" ->
             get_info({:js, path})
-            # _ -> get_info(params)
+
+          ".jpg" ->
+            get_info({:jpg, path})
+
+          ".jpeg" ->
+            get_info({:jpeg, path})
+
+          ".ico" ->
+            get_info({:ico, path})
+
+          ".svg" ->
+            get_info({:svg, path})
+
+          _ ->
+            get_info({:any, path})
         end
 
       _ ->
@@ -56,16 +69,30 @@ defmodule ResponseBuilder do
     end
   end
 
-  def get_info({:css, path}) do
-    File.read(path)
-  end
-
-  def get_info({:js, path}) do
-    File.read(path)
-  end
-
-  # def get_info(params) do
+  # def get_info({:css, path}) do
+  #   File.read(path)
   # end
+
+  # def get_info({:js, path}) do
+  #   File.read(path)
+  # end
+  def get_info({type, path}) do
+    result = File.read(path)
+
+    case result do
+      {:error, _} ->
+        result
+
+      {:ok, value} ->
+        case type do
+          :jpg -> {:ok, Base.encode64(value)}
+          :jpeg -> {:ok, Base.encode64(value)}
+          :svg -> {:ok, Base.encode64(value)}
+          :ico -> {:ok, Base.encode64(value)}
+          _ -> result
+        end
+    end
+  end
 
   @doc """
     Принимает на вход params, data где:
@@ -95,6 +122,10 @@ defmodule ResponseBuilder do
           ".html" -> "Content-Type: text/html; charset=utf-8"
           ".css" -> "Content-Type: text/css"
           ".js" -> "Content-Type: text/js"
+          ".svg" -> "Content-Type: image/svg + xml"
+          ".jpeg" -> "Content-Type: image/jpeg"
+          ".jpg" -> "Content-Type: image/jpeg"
+          ".ico" -> "Content-Type: image/x-icon"
         end
 
       _ ->
@@ -114,18 +145,20 @@ defmodule ResponseBuilder do
     end
   end
 
-  def set_content_length(params, {status, value}) do
+  def set_content_length(_params, {status, value}) do
     # IO.puts(value)
     # TODO: Refactor this shit
     case status do
       :ok ->
-        case Map.fetch(params, "file") do
-          {:ok, path} ->
-            "Content-Length: #{get_length(path)}"
+        "Content-Length: #{String.length(value)}"
 
-          _ ->
-            "Content-Length: #{String.length(value)}"
-        end
+      # case Map.fetch(params, "file") do
+      #   {:ok, path} ->
+      #     "Content-Length: #{get_length(path)}"
+
+      #   _ ->
+      #     "Content-Length: #{String.length(value)}"
+      # end
 
       :error ->
         {_reason, data} = value
